@@ -37,15 +37,16 @@ class Login extends Component<{}, AppState> {
             email,
             pwd: password
         }).then((ret) => {
-            if (ret.status == 201) {
+            if (ret.status == 200) {
                 history.push({
                     pathname: '/',
                     state: {
-                        access_token: ret.data,
+                        token: ret.data,
                         email,
                     }
                 });
-                localStorage.setItem("token", ret.data.access_token);
+                console.log(ret.data);
+                localStorage.setItem("token", ret.data.token);
             }
         }, (error) => {
             if (error.response.status == 401) {
