@@ -106,7 +106,7 @@ class Register extends Component<{}, AppState> {
             }
         }, (error) => {
             console.log(error);
-            if (error.response.status == 409 && error.response.data.message == "user_exists") {
+            if (error.response.status == 409) {
                 this.setState({errors: "User is already registered!"});
             }
         });

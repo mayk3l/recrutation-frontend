@@ -6,15 +6,23 @@ interface Props {
     location: any
 }
 
-export default class Home extends Component<Props> {
+export default class Home extends Component<Props, any> {
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            token: localStorage.getItem("token"),
+        };
+    };
+
     render() {
-        const token = localStorage.getItem("token");
         return (
             <div>
                 <Navbar />
                 <div className="menuContainer">
                     <div className="titleApp">
-                        <h1>Healfy</h1>
+                        <p>{this.state.token ? 'Zalogowany' : 'Wylogowany'}</p>
                     </div>
                 </div>
             </div>

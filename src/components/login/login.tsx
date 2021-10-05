@@ -45,8 +45,7 @@ class Login extends Component<{}, AppState> {
                         email,
                     }
                 });
-                console.log(ret.data);
-                localStorage.setItem("token", ret.data.token);
+                localStorage.setItem("token", ret.data);
             }
         }, (error) => {
             if (error.response.status == 401) {
