@@ -7,14 +7,17 @@ interface Props {
 }
 
 export default class Home extends Component<Props, any> {
-
     constructor(props: any) {
         super(props);
 
         this.state = {
-            token: localStorage.getItem("token"),
+            token: '',
         };
     };
+
+    componentDidMount() {
+        this.setState({token: localStorage.getItem('token') } )
+    }
 
     render() {
         return (

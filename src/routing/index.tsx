@@ -4,6 +4,7 @@ import Home from "../components/home/home";
 import Login from "../components/login/login";
 import history from './history';
 import Register from '../components/register/register';
+import Sms from "../components/smsForm/sms";
 
 export default class Routes extends Component {
     render() {
@@ -13,6 +14,7 @@ export default class Routes extends Component {
                     <Route path="/" exact component={Home} />
                     <Route path="/Login" component={Login} />
                     <Route path="/Register" component={Register} />
+                    <Route path="/Sms" component={Sms} />
                 </Switch>
             </Router>
         )

@@ -38,19 +38,18 @@ class Login extends Component<{}, AppState> {
             pwd: password
         }).then((ret) => {
             if (ret.status == 200) {
+                localStorage.setItem("token", ret.data.token);
+                localStorage.setItem("firstTimeLogged", ret.data.first_time_logged);
                 history.push({
                     pathname: '/',
-                    state: {
-                        token: ret.data,
-                        email,
-                    }
                 });
-                localStorage.setItem("token", ret.data);
             }
         }, (error) => {
             if (error.response.status == 401) {
                 this.setState({loginErrors: "Wrong email or password"});
                 console.log('UNATHORIZED USER');
+            } else if (error.response.status = 400) {
+                this.setState({loginErrors: "Please fill email and password"});
             }
         });
         event.preventDefault();

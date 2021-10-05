@@ -24,7 +24,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Navbar() {
     const classes = useStyles();
+    const handleClick = () => {
+        const token = localStorage.getItem('token')
+        if (token) history.push('/')
+        else history.push('/register')
+    }
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        history.push('/');
+    }
 
+    const handleLogin = () => {
+        const firstTimeLogged = localStorage.getItem("firstTimeLogged");
+        if (!firstTimeLogged) history.push('/')
+        else history.push('/sms')
+    }
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -36,7 +50,8 @@ export default function Navbar() {
                         Healfy
                     </Typography>
                     <Button variant="contained" className="btn btn-success" onClick={() => history.push("/Login")}>Log In</Button>
-                    <Button variant="contained" className="btn btn-success" onClick={() => history.push("/Register")}>Sign Up</Button>
+                    <Button variant="contained" className="btn btn-success" onClick={() => handleClick()}>Sign Up</Button>
+                    <Button variant="contained" className="btn btn-success" onClick={() => handleLogout()}>Logout</Button>
                 </Toolbar>
             </AppBar>
         </div>
