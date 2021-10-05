@@ -6,12 +6,16 @@ import axios from "axios";
 import history from "../../routing/history";
 
 interface AppState{
-    username: any,
-    password: any,
-    email: any,
-    usernameError: any,
-    passwordError: any,
-    emailError: any,
+    firstName: string,
+    lastName: string,
+    phone: string,
+    password: string,
+    email: string,
+    firstNameError: string,
+    lastNameError: string,
+    phoneError: string,
+    passwordError: string,
+    emailError: string,
     errors: any
 }
 
@@ -25,10 +29,14 @@ class Register extends Component<{}, AppState> {
         super(props);
 
         this.state = {
-            username: "",
+            firstName: "",
+            lastName: "",
             password: "",
+            phone: "",
             email: "",
-            usernameError: " ",
+            firstNameError: " ",
+            lastNameError: " ",
+            phoneError: " ",
             passwordError: " ",
             emailError: " ",
             errors: []
@@ -43,15 +51,27 @@ class Register extends Component<{}, AppState> {
         const {name , value} = event.target;
         let uError, pError, eError;
         switch(name) {
-            case 'username':
-                uError = value.length < 5
-                    ? 'Username must be 5 characters long!'
+            case 'firstName':
+                uError = value.length < 2
+                    ? 'First name must be 2 characters long!'
                     : '';
-                this.setState({usernameError: uError});
+                this.setState({firstNameError: uError});
+                break;
+            case 'lastName':
+                uError = value.length < 2
+                    ? 'Last name must be 2 characters long!'
+                    : '';
+                this.setState({lastNameError: uError});
+                break;
+            case 'phone':
+                uError = value.length < 9
+                    ? 'Phone must be 9 characters long!'
+                    : '';
+                this.setState({phoneError: uError});
                 break;
             case 'password':
-                pError = value.length < 8
-                    ? 'Password must be 8 characters long!'
+                pError = value.length < 6
+                    ? 'Password must be 6 characters long!'
                     : '';
                 this.setState({passwordError: pError});
                 break;
@@ -67,12 +87,14 @@ class Register extends Component<{}, AppState> {
     };
 
     handleSubmit(event:any) {
-        const { username, password, email } = this.state;
+        const { firstName, lastName, phone, password, email } = this.state;
 
-        axios.post('http://localhost:3000/users/add-user/', {
-            login: username,
-            password: password,
-            email: email
+        axios.post('https://recrutation-healfy.herokuapp.com/user/register', {
+            first_name: firstName,
+            last_name: lastName,
+            phone,
+            pwd: password,
+            email,
         }).then((ret) => {
             if (ret.status == 200) {
                 history.push({
@@ -83,10 +105,9 @@ class Register extends Component<{}, AppState> {
                 });
             }
         }, (error) => {
-            if (error.response.status == 409 && error.response.data.message == "This username is registered already!") {
-                this.setState({errors: "Username is already registered!"});
-            } else if (error.response.status == 409 && error.response.data.message == "Email address is registered!") {
-                this.setState({errors: "Email is already registered!"});
+            console.log(error);
+            if (error.response.status == 409 && error.response.data.message == "user_exists") {
+                this.setState({errors: "User is already registered!"});
             }
         });
         event.preventDefault();
@@ -94,9 +115,9 @@ class Register extends Component<{}, AppState> {
 
 
     render() {
-        const { usernameError, passwordError, emailError } = this.state;
+        const { firstNameError, lastNameError, phoneError, passwordError, emailError } = this.state;
         const enabled =
-            usernameError == '' && passwordError == '' && emailError == '';
+            firstNameError === '' && lastNameError === '' && phoneError === '' && passwordError === '' && emailError === '';
 
         return (
             <div className="menuContainer">
@@ -105,12 +126,26 @@ class Register extends Component<{}, AppState> {
                     <p className="register-error"> {this.state.errors }</p>
                     <form onSubmit={ this.handleSubmit } className="loginForm">
                         <input type="text"
-                               placeholder="Login"
-                               name="username"
-                               value={this.state.username}
+                               placeholder="Jan"
+                               name="firstName"
+                               value={this.state.firstName}
                                onChange={this.handleChange}
                         />
-                        <p className="register-error">{ this.state.usernameError }</p>
+                        <p className="register-error">{ this.state.firstNameError }</p>
+                        <input type="text"
+                               placeholder="Kowalski"
+                               name="lastName"
+                               value={this.state.lastName}
+                               onChange={this.handleChange}
+                        />
+                        <p className="register-error">{ this.state.lastNameError }</p>
+                        <input type="text"
+                               placeholder="669939790"
+                               name="phone"
+                               value={this.state.phone}
+                               onChange={this.handleChange}
+                        />
+                        <p className="register-error">{ this.state.phoneError }</p>
                         <input type="password"
                                placeholder="Password"
                                name="password"
@@ -119,7 +154,7 @@ class Register extends Component<{}, AppState> {
                         />
                         <p className="register-error">{ this.state.passwordError }</p>
                         <input type="text"
-                               placeholder="Email"
+                               placeholder="michal.larysz91@gmail.com"
                                name="email"
                                value={this.state.email}
                                onChange={this.handleChange}

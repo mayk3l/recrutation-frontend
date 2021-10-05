@@ -6,7 +6,7 @@ import history from "../../routing/history";
 import axios from "axios";
 
 interface AppState{
-    username: any,
+    email: string,
     password: any,
     loginErrors: any
 }
@@ -17,7 +17,7 @@ class Login extends Component<{}, AppState> {
         super(props);
 
         this.state = {
-            username: "",
+            email: "",
             password: "",
             loginErrors: "",
         };
@@ -31,25 +31,25 @@ class Login extends Component<{}, AppState> {
     };
 
     handleSubmit(event:any) {
-        const { username, password, loginErrors } = this.state;
+        const { email, password, loginErrors } = this.state;
 
-        axios.post('http://localhost:3000/auth/login/', {
-            username: username,
-            password: password
+        axios.post('https://recrutation-healfy.herokuapp.com/auth/login', {
+            email,
+            pwd: password
         }).then((ret) => {
             if (ret.status == 201) {
                 history.push({
                     pathname: '/',
                     state: {
                         access_token: ret.data,
-                        username: username
+                        email,
                     }
                 });
                 localStorage.setItem("token", ret.data.access_token);
             }
         }, (error) => {
             if (error.response.status == 401) {
-                this.setState({loginErrors: "Wrong username or password"});
+                this.setState({loginErrors: "Wrong email or password"});
                 console.log('UNATHORIZED USER');
             }
         });
@@ -66,10 +66,10 @@ class Login extends Component<{}, AppState> {
                         <form onSubmit={this.handleSubmit} className="loginForm">
                             <div>
                                 <input type="text"
-                                       placeholder="Nickname"
-                                       name = "username"
+                                       placeholder="blabla@gmail.com"
+                                       name = "email"
                                        onChange={this.handleChange}
-                                       value={this.state.username}
+                                       value={this.state.email}
                                 />
                             </div>
                             <div>
