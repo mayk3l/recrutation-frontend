@@ -40,9 +40,15 @@ class Login extends Component<{}, AppState> {
             if (ret.status == 200) {
                 localStorage.setItem("token", ret.data.token);
                 localStorage.setItem("firstTimeLogged", ret.data.first_time_logged);
-                history.push({
-                    pathname: '/',
-                });
+                if (ret.data.first_time_logged) {
+                    history.push({
+                        pathname: '/Sms',
+                    });
+                } else {
+                    history.push({
+                        pathname: '/',
+                    });
+                }
             }
         }, (error) => {
             if (error.response.status == 401) {
