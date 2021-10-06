@@ -5,7 +5,8 @@ import Navbar from '../navbar/navbar';
 import axios from "axios";
 import history from "../../routing/history";
 
-interface AppState{
+interface AppState {
+    _id: string | null,
     smsCode: string,
     codeError: string,
     errors: [],
@@ -17,6 +18,7 @@ class Sms extends Component<{}, AppState> {
         super(props);
 
         this.state = {
+            _id: "",
             smsCode: "",
             codeError: "",
             errors: [],
@@ -25,10 +27,14 @@ class Sms extends Component<{}, AppState> {
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
-    handleSubmit(event:any) {
-        const { smsCode } = this.state;
+    componentDidMount() {
+        this.setState({_id: localStorage.getItem('_id') } )
+    }
 
-        axios.post('https://recrutation-healfy.herokuapp.com/auth/sms-verify', {
+    handleSubmit(event:any) {
+        const { smsCode, _id } = this.state;
+
+        axios.post(`https://recrutation-healfy.herokuapp.com/auth/sms-verify/${_id}`, {
             smsCode,
         }).then((ret) => {
             if (ret.status == 200) {
@@ -51,6 +57,7 @@ class Sms extends Component<{}, AppState> {
             <div className="menuContainer">
                 <Navbar/>
                 <div className="loginFormContainer">
+                    <h3>Sms Verification</h3>
                     <p className="register-error"> {this.state.errors }</p>
                     <form onSubmit={ this.handleSubmit } className="loginForm">
                         <input type="text"

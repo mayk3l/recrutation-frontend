@@ -124,6 +124,7 @@ class Register extends Component<{}, AppState> {
                 <Navbar/>
                 <div className="loginFormContainer">
                     <p className="register-error"> {this.state.errors }</p>
+                    <h3>Register</h3>
                     <form onSubmit={ this.handleSubmit } className="loginForm">
                         <input type="text"
                                placeholder="Jan"

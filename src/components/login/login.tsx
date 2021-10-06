@@ -38,13 +38,14 @@ class Login extends Component<{}, AppState> {
             pwd: password
         }).then((ret) => {
             if (ret.status == 200) {
-                localStorage.setItem("token", ret.data.token);
+                localStorage.setItem("userId", ret.data._id);
                 localStorage.setItem("firstTimeLogged", ret.data.first_time_logged);
-                if (ret.data.first_time_logged) {
+                if (ret.data.first_time_logged == true) {
                     history.push({
                         pathname: '/Sms',
                     });
                 } else {
+                    localStorage.setItem("token", ret.data.token);
                     history.push({
                         pathname: '/',
                     });
@@ -67,6 +68,7 @@ class Login extends Component<{}, AppState> {
                 <div className="menuContainer">
                     <Navbar/>
                     <div className="loginFormContainer">
+                        <h3>Login</h3>
                         <h2 className="login-error">{ this.state.loginErrors }</h2>
                         <form onSubmit={this.handleSubmit} className="loginForm">
                             <div>
