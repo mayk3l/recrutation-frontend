@@ -40,7 +40,7 @@ class Login extends Component<{}, AppState> {
             if (ret.status == 200) {
                 localStorage.setItem("userId", ret.data._id);
                 localStorage.setItem("firstTimeLogged", ret.data.first_time_logged);
-                if (ret.data.first_time_logged == true) {
+                if (ret.data.first_time_logged == false) {
                     history.push({
                         pathname: '/Sms',
                     });
