@@ -31,6 +31,10 @@ class Sms extends Component<{}, AppState> {
         this.setState({_id: localStorage.getItem('_id') } )
     }
 
+    handleChange =(event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ ...this.state, [event.currentTarget.name]: String(event.target.value) });
+    };
+
     handleSubmit(event:any) {
         const { smsCode, _id } = this.state;
 
@@ -62,6 +66,7 @@ class Sms extends Component<{}, AppState> {
                         <input type="text"
                                placeholder="1234"
                                name="smsCode"
+                               onChange={this.handleChange}
                                value={this.state.smsCode}
                         />
                         <p className="register-error">{ this.state.codeError }</p>
