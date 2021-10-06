@@ -22,7 +22,7 @@ class Sms extends Component<Props, any> {
         super(props);
 
         this.state = {
-            _id: localStorage.getItem('userId'),
+            _id: '',
             smsCode: "",
             codeError: "",
             errors: [],
@@ -41,6 +41,8 @@ class Sms extends Component<Props, any> {
 
     handleSubmit(event:any) {
         const { smsCode, _id } = this.state;
+
+        console.log(_id);
 
         axios.put(`https://recrutation-healfy.herokuapp.com/auth/sms-verify/${_id}`, {
             smsCode,
