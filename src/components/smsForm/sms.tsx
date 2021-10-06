@@ -12,7 +12,11 @@ interface AppState {
     errors: [],
 }
 
-class Sms extends Component<{}, AppState> {
+interface Props {
+    location: any
+}
+
+class Sms extends Component<Props, any> {
 
     constructor(props: any) {
         super(props);
