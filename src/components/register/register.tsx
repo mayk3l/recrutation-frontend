@@ -96,7 +96,7 @@ class Register extends Component<{}, AppState> {
             pwd: password,
             email,
         }).then((ret) => {
-            if (ret.status == 200) {
+            if (ret.status == 201) {
                 history.push({
                     pathname: '/',
                     state: {
