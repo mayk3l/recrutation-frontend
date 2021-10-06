@@ -42,6 +42,7 @@ class Sms extends Component<{}, AppState> {
             smsCode,
         }).then((ret) => {
             if (ret.status == 200) {
+                localStorage.setItem("token", ret.data.token);
                 history.push({
                     pathname: '/',
                 });
