@@ -34,7 +34,7 @@ class Sms extends Component<{}, AppState> {
     handleSubmit(event:any) {
         const { smsCode, _id } = this.state;
 
-        axios.post(`https://recrutation-healfy.herokuapp.com/auth/sms-verify/${_id}`, {
+        axios.put(`https://recrutation-healfy.herokuapp.com/auth/sms-verify/${_id}`, {
             smsCode,
         }).then((ret) => {
             if (ret.status == 200) {
@@ -49,7 +49,6 @@ class Sms extends Component<{}, AppState> {
         });
         event.preventDefault();
     };
-
 
     render() {
         const { smsCode } = this.state;
@@ -72,6 +71,5 @@ class Sms extends Component<{}, AppState> {
             </div>
         );
     }
-
 }
 export default Sms;
