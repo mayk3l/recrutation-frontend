@@ -22,7 +22,7 @@ class Sms extends Component<Props, any> {
         super(props);
 
         this.state = {
-            _id: localStorage.getItem('_id'),
+            _id: localStorage.getItem('userId'),
             smsCode: "",
             codeError: "",
             errors: [],
@@ -32,7 +32,7 @@ class Sms extends Component<Props, any> {
     };
 
     componentDidMount() {
-        this.setState({_id: localStorage.getItem('_id') } )
+        this.setState({_id: localStorage.getItem('userId') } )
     }
 
     handleChange =(event: React.ChangeEvent<HTMLInputElement>) => {
