@@ -18,7 +18,7 @@ class Sms extends Component<{}, AppState> {
         super(props);
 
         this.state = {
-            _id: "",
+            _id: localStorage.getItem('_id'),
             smsCode: "",
             codeError: "",
             errors: [],
@@ -55,7 +55,7 @@ class Sms extends Component<{}, AppState> {
     };
 
     render() {
-        const { smsCode } = this.state;
+        const { smsCode, _id } = this.state;
         return (
             <div className="menuContainer">
                 <Navbar/>
